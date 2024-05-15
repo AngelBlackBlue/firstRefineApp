@@ -5,6 +5,7 @@ export const ListProducts = () => {
         resource: "products",
         pagination: {current:1, pageSize: 10},
         sorters: [{field: "name", order: "asc"}],
+        filters: [{field: "material", operator: "eq", value: "Aluminum"}]
     });
 
     if (isLoading) {
