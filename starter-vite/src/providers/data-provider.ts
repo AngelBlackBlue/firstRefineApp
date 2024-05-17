@@ -61,8 +61,20 @@ export const dataProvider: DataProvider = {
       total: 0,
     }
   },
-  create: () => {
-    throw new Error("Not implemented");
+  create: async({resource, variables}) => {
+    const response = await fetch(`${API_URL}/${resource}`, {
+      method: "POST",
+      body: JSON.stringify(variables),
+      headers: {
+        "Content-Type": "application/json",
+      }
+     })
+
+    if (response.status < 200 || response.status > 299) throw response;
+
+    const data = await response.json()
+
+    return { data }
   },
   deleteOne: () => {
     throw new Error("Not implemented");
