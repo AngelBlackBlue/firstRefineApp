@@ -1,11 +1,15 @@
 import { useTable, useMany } from "@refinedev/core"
 
+type SortOrder = "asc" | "desc";
+
 export const ListProducts = () => {
     const {
         tableQueryResult: { data, isLoading },
         current,
         setCurrent,
-        pageCount 
+        pageCount,
+        sorters,
+         setSorters,
     } = useTable({
         resource: "products",
         pagination: {current:1, pageSize: 10},
@@ -41,18 +45,57 @@ export const ListProducts = () => {
         setCurrent(page)
     }
 
+    // We'll use this function to get the current sorter for a field.
+    const getSorter = (field: string) =>{
+        const sorter = sorters?.find((sorter) => sorter.field === field);
+
+        if (sorter) {
+            return sorter.order
+        }
+    }
+
+    // We'll use this function to toggle the sorters when the user clicks on the table headers.
+    const onSort = (field: string) =>{
+        const sorter =  getSorter(field)
+        setSorters(
+            sorter === "desc" ? [
+            {                field,
+                order: sorter === "desc" ? "asc" : "desc",
+            }
+            ] : [
+            {
+                field,
+                order: sorter === "asc" ? "desc" : "asc",
+            },
+            ]
+        )
+    }
+
+    // We'll use this object to display visual indicators for the sorters.
+    const indicator = { asc: "⬆️", desc: "⬇️"}
+
     return (
         <div>
            <h1>Products</h1>
            <table>
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Material</th>
-                        <th>Price</th>
-               </tr>
+                        <th onClick={() => onSort("id")}>
+                            ID {indicator[getSorter("id") as SortOrder]}
+                        </th>
+                        <th onClick={() => onSort("name")}>
+                            Name {indicator[getSorter("name") as SortOrder]}
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th onClick={() => onSort("material")}>
+                            Material {indicator[getSorter("material") as SortOrder]}
+                        </th>
+                        <th onClick={() => onSort("price")}>
+                            Price {indicator[getSorter("price") as SortOrder]}
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
                     {data?.data.map((product) => (
