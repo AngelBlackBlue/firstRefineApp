@@ -56,9 +56,11 @@ export const dataProvider: DataProvider = {
 
     const data = await response.json();
 
+    const total = Number(response.headers.get("x-total-count"))
+
     return{
       data,
-      total: 0,
+      total,
     }
   },
   create: async({resource, variables}) => {
@@ -80,7 +82,7 @@ export const dataProvider: DataProvider = {
      const params = new URLSearchParams();
 
      if(ids){
-      ids.forEach((id) => params.append("id", id))
+      ids.forEach((id) => params.append("id", id.toString()))
      }
 
      const response = await fetch(`${API_URL}/${resource}?${params.toString()}`)

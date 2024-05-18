@@ -2,7 +2,10 @@ import { useTable, useMany } from "@refinedev/core"
 
 export const ListProducts = () => {
     const {
-        tableQueryResult: { data, isLoading } 
+        tableQueryResult: { data, isLoading },
+        current,
+        setCurrent,
+        pageCount 
     } = useTable({
         resource: "products",
         pagination: {current:1, pageSize: 10},
@@ -20,6 +23,22 @@ export const ListProducts = () => {
 
    if (isLoading) {
         return <div>Loading...</div>
+    }
+
+    const onPrevious = () => {
+        if (current > 1) {
+            setCurrent(current - 1)
+        }
+    } 
+
+    const onNext = () => {
+        if (current < pageCount) {
+            setCurrent(current + 1)
+        }
+    }
+
+    const onPage = (page: number) => {
+        setCurrent(page)
     }
 
     return (
@@ -53,6 +72,23 @@ export const ListProducts = () => {
                     ))}
                 </tbody>
            </table>
+           <div className="pagination">
+                <button type="button" onClick={onPrevious}>
+                    {"<"}
+                </button>
+                <div>
+                    {current -1 > 0 && (
+                        <span onClick={()=> onPage(current-1)}>{current-1}</span>
+                    )}
+                    <span className="current">{current}</span>
+                    {current + 1 < pageCount && (
+                        <span onClick={()=> onPage(current+1)}>{current+1}</span>
+                    )}
+                </div>
+                <button type="button" onClick={onNext}>
+                    {">"}
+                </button>
+           </div>
         </div>
     )
 }
