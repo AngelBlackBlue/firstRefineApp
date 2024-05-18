@@ -49,10 +49,8 @@ export const CreateProduct = () => {
             <input type="text" id="material" name="material" />
         </div>
 
-    
-            <label htmlFor="category">Category ID</label>
-            <input type="number" id="category" name="category"/>
-      
+        {/* <label htmlFor="category">Category ID</label>
+        <input type="number" id="category" name="category"/> */}
 
         <label htmlFor="category">Category</label>
         <select name="category" id="category">
