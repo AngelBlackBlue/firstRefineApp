@@ -9,11 +9,14 @@ export const ListProducts = () => {
         sorters: { initial: [{field: "id", order: "asc"}]},
     });
 
+    console.log(data?.data)
 
     const { data: categories } =useMany({
         resource: "categories",
         ids: data?.data?.map( (product)  => product.category?.id) ??  [],
     })
+
+    console.log(categories?.data)
 
    if (isLoading) {
         return <div>Loading...</div>
