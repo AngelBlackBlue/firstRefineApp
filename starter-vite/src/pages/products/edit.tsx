@@ -1,10 +1,11 @@
 import { useForm, useSelect } from "@refinedev/core"
+import { Button, Flex, Input, Select } from "antd"
 
 export const EditProduct = () => {
     const { onFinish, mutationResult, queryResult } = useForm({
         action: "edit",
         resource: "products",
-        id: "123"
+        id: "112"
     })
     
     if (queryResult === undefined) {
@@ -35,20 +36,22 @@ export const EditProduct = () => {
         });
       };
 
+
+
    return (
     <form onSubmit={onSubmit} >
-        <div >
-           <label htmlFor="name">Name</label>
-           <input 
-               type="text" 
-               id="name" 
-               name="name" 
-               defaultValue={record?.name}
-               className="text-center"
-            />
-        </div>
-        
-        <div>
+        <Flex vertical>
+           <Flex vertical>
+               <label htmlFor="name">Name</label>
+               <input 
+                   type="text" 
+                   id="name" 
+                   name="name" 
+                   defaultValue={record?.name}
+                />
+            </Flex>
+     
+        <Flex vertical>
            <label htmlFor="description">Description</label>
            <textarea 
                name="description" 
@@ -56,29 +59,29 @@ export const EditProduct = () => {
                defaultValue={record?.description}
                >
             </textarea>
-        </div>
+        </Flex>  
+    
 
-        <div>
            <label htmlFor="price">Price</label>
-           <input 
+           <Input 
                type="number" 
                id="price" 
                name="price" 
                pattern="\d*\.?\d*"
                defaultValue={record?.price}
-            />
-        </div>
+               />
+      
 
-        <div>
+    
             <label htmlFor="material">Material</label>
-            <input 
+            <Input 
                 type="text" 
                 id="material" 
                 name="material"
                 defaultValue={record?.material} 
-            />
+                />
             
-        </div>
+    
 
         {/* <label htmlFor="category">Category ID</label>
         <input type="number" id="category" name="category"/> */}
@@ -87,19 +90,22 @@ export const EditProduct = () => {
         <select name="category" id="category">
             {options?.map((option) => (
                 <option 
-                    key={option.value} 
-                    value={option.value}
-                    selected={record?.category.id == option.value}
+                key={option.value} 
+                value={option.value}
+                selected={record?.category.id == option.value}
                 >
                     {option.label}
                 </option>
             ))}
         </select>
 
-        <div>
+        <Flex justify="center">
             {mutationResult.isSuccess && <span>successFully submitted</span>}
-            <button type="submit">Submit</button>
-        </div>
+            {/* <button type="submit">submit</button> */}
+            <Button type="primary" htmlType="submit">Submit</Button>
+        </Flex>
+        </Flex>
+      
     </form>
    ) 
 }

@@ -1,4 +1,5 @@
 import { useForm, useSelect } from "@refinedev/core"
+import { Flex, Input } from "antd";
 
 export const CreateProduct = () => {
     const { onFinish, mutationResult } = useForm({
@@ -27,28 +28,29 @@ export const CreateProduct = () => {
         });
       };
 
+     
+
    return (
     <form onSubmit={onSubmit} className="flex flex-col bg-black">
-        <div className="flex flex-col bg-black">
-           <label htmlFor="name">Name</label>
-           <input type="text" id="name" name="name" className="text-center"/>
-        </div>
+      <Flex vertical>
         
-        <div>
+           <label htmlFor="name">Name</label>
+           <Input
+              type="text" 
+              id="name" 
+              name="name"
+           />
+           {/* <input type="text" id="name" name="name"/> */}
+             
            <label htmlFor="description">Description</label>
            <textarea name="description" id="description"></textarea>
-        </div>
-
-        <div>
+               
            <label htmlFor="price">Price</label>
            <input type="number" id="price" name="price" step=".01"/>
-        </div>
-
-        <div>
+              
             <label htmlFor="material">Material</label>
             <input type="text" id="material" name="material" />
-        </div>
-
+     
         {/* <label htmlFor="category">Category ID</label>
         <input type="number" id="category" name="category"/> */}
 
@@ -65,6 +67,7 @@ export const CreateProduct = () => {
             {mutationResult.isSuccess && <span>successFully submitted</span>}
             <button type="submit">Submit</button>
         </div>
+      </Flex>    
     </form>
    ) 
 }
