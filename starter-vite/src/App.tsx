@@ -6,15 +6,22 @@ import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
+import { App as AntdApp, ConfigProvider } from "antd";
+import { RefineThemes } from "@refinedev/antd";
 
-function App(): JSX.Element {
+function App() {
   return (
-    <Refine dataProvider={dataProvider}>
-      {/* <ShowProduct/> */}
-      {/* <EditProduct/> */}
-      <ListProducts/>
-      {/* <CreateProduct/> */}
-    </Refine>
+    <ConfigProvider theme={RefineThemes.Blue}>
+    <AntdApp>
+     <Refine dataProvider={dataProvider}>
+       {/* <ShowProduct/> */}
+       <EditProduct/>
+       {/* <ListProducts/> */}
+       {/* <CreateProduct/> */}
+     </Refine>
+    </AntdApp>
+    </ConfigProvider>
+  
   );
 }
 

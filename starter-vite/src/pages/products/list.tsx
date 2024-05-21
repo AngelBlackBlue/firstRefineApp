@@ -2,6 +2,20 @@ import { useTable, useMany } from "@refinedev/core"
 
 type SortOrder = "asc" | "desc";
 
+interface Category {
+    id: number;
+    tittle: string
+}
+
+interface Product {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    material: string;
+    category: Category;
+}
+
 export const ListProducts = () => {
     const {
         tableQueryResult: { data, isLoading },
@@ -20,7 +34,7 @@ export const ListProducts = () => {
 
     const { data: categories } =useMany({
         resource: "categories",
-        ids: data?.data?.map( (product)  => product.category?.id) ??  [],
+        ids: data?.data?.map( (product: Product)  => product.category?.id) ??  [],
     })
 
     console.log(categories?.data)
@@ -98,14 +112,14 @@ export const ListProducts = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.data.map((product) => (
+                    {data?.data.map((product: Product) => (
                         <tr key={product.id}>
                             <td>{product.id}</td>
                             <td>{product.name}</td>
                             {/* <td>{product.category?.id}</td> */}
                             <td>{
                                 categories?.data.find(
-                                   (category) => category.id == product.category?.id,
+                                   (category: Category) => category.id == product.category?.id,
                                 )?.title
                             }
                             </td>
