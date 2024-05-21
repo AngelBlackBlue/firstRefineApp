@@ -1,12 +1,16 @@
 import { useForm, useSelect } from "@refinedev/core"
 import { Flex, Input } from "antd";
+import { useEffect } from "react";
 
 export const CreateProduct = () => {
+
     const { onFinish, mutationResult } = useForm({
         action: "create",
         resource: "products",
     })
 
+
+    
     const { options } = useSelect({
         resource: "categories"
         // optionLabel: "title", // Default value is "title" so we don't need to provide it.
