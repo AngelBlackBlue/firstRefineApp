@@ -5,15 +5,11 @@ export const EditProduct = () => {
     const { onFinish, mutationResult, queryResult } = useForm({
         action: "edit",
         resource: "products",
-        id: "112"
+        id: "131"
     })
-    
-    if (queryResult === undefined) {
-        console.log(queryResult)
-        throw new Error('.....')
-    }
 
-    const record = queryResult.data?.data;
+       
+    const record = queryResult?.data?.data;
     
     const { options } = useSelect({
         resource: "categories"
@@ -41,7 +37,7 @@ export const EditProduct = () => {
    return (
     <form onSubmit={onSubmit} >
         <Flex vertical>
-           <Flex vertical>
+           
                <label htmlFor="name">Name</label>
                <input 
                    type="text" 
@@ -49,7 +45,14 @@ export const EditProduct = () => {
                    name="name" 
                    defaultValue={record?.name}
                 />
-            </Flex>
+                <Input 
+                   type="text" 
+                   id="name" 
+                   name="name" 
+                   defaultValue={record?.name}
+                />
+         
+         
      
         <Flex vertical>
            <label htmlFor="description">Description</label>
@@ -101,8 +104,8 @@ export const EditProduct = () => {
 
         <Flex justify="center">
             {mutationResult.isSuccess && <span>successFully submitted</span>}
-            {/* <button type="submit">submit</button> */}
-            <Button type="primary" htmlType="submit">Submit</Button>
+            <button type="submit">submit</button>
+            {/* <Button type="primary" htmlType="submit">Submit</Button> */}
         </Flex>
         </Flex>
       
