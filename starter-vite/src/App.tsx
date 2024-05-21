@@ -11,6 +11,9 @@ import { CreateProduct } from "./pages/products/create";
 import { App as AntdApp, ConfigProvider } from "antd";
 import { RefineThemes } from "@refinedev/antd";
 
+import { Login } from "./pages/login";
+import { Header } from "./componentes/header";
+
 function App(): JSX.Element {
   return (
     <ConfigProvider theme={RefineThemes.Blue}>
@@ -21,8 +24,9 @@ function App(): JSX.Element {
      >
       <Authenticated 
           key="protected" 
-          fallback={<div>Not Authenticated</div>}
+          fallback={<Login/>}
       >
+        <Header/>
          {/* <ShowProduct/> */}
          {/* <EditProduct/> */}
          <ListProducts />
