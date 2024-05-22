@@ -2,20 +2,6 @@ import { useTable, useMany } from "@refinedev/core"
 
 type SortOrder = "asc" | "desc";
 
-interface Category {
-    id: number;
-    tittle: string
-}
-
-interface Product {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    material: string;
-    category: Category;
-}
-
 export const ListProducts = () => {
     const {
         tableQueryResult: { data, isLoading },
@@ -23,18 +9,16 @@ export const ListProducts = () => {
         setCurrent,
         pageCount,
         sorters,
-         setSorters,
+        setSorters,
     } = useTable({
-        resource: "products",
+        resource: "protected-products",
         pagination: {current:1, pageSize: 10},
         sorters: { initial: [{field: "id", order: "asc"}]},
     });
 
-    console.log(data?.data)
-
     const { data: categories } =useMany({
         resource: "categories",
-        ids: data?.data?.map( (product: Product)  => product.category?.id) ??  [],
+        ids: data?.data?.map( (product) => product.category?.id) ??  [],
     })
 
     console.log(categories?.data)
@@ -112,14 +96,14 @@ export const ListProducts = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.data.map((product: Product) => (
+                    {data?.data.map((product) => (
                         <tr key={product.id}>
                             <td>{product.id}</td>
                             <td>{product.name}</td>
                             {/* <td>{product.category?.id}</td> */}
                             <td>{
                                 categories?.data.find(
-                                   (category: Category) => category.id == product.category?.id,
+                                   (category) => category.id == product.category?.id,
                                 )?.title
                             }
                             </td>
