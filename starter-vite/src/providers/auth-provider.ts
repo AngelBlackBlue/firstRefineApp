@@ -29,6 +29,7 @@ export const authProvider: AuthProvider = {
       // We're returning success: true to indicate that the logout operation was successful.
       return { success: true };
     },
+    
     check: async () => {
         // When logging in, we'll obtain an access token from our API and store it in the local storage.
         // Now let's check if the token exists in the local storage.
@@ -42,6 +43,23 @@ export const authProvider: AuthProvider = {
     register: async (params) => { throw new Error("Not implemented"); },
     forgotPassword: async (params) => { throw new Error("Not implemented"); },
     updatePassword: async (params) => { throw new Error("Not implemented"); },
-    getIdentity: async () => { throw new Error("Not implemented"); },
+    
+    getIdentity: async () => {
+      const token = localStorage.getItem("my_access_token");
+      const response = await fetch("https://api.fake-rest.refine.dev/auth/me", {
+        headers: {
+          Authorization: token ? token : "",
+        },
+      });
+  
+      if (response.status < 200 || response.status > 299) {
+        return null;
+      }
+  
+      const data = await response.json();
+  
+      return data;
+    },
+
     getPermissions: async () => { throw new Error("Not implemented"); },
 };
