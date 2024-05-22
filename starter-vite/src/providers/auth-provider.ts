@@ -37,9 +37,19 @@ export const authProvider: AuthProvider = {
         const token = localStorage.getItem("my_access_token");
     
         return { authenticated: Boolean(token) };
-      },
-    onError: async (error) => { throw new Error("Not implemented"); },
-    // optional methods
+    },
+    
+    onError: async (error)=> {
+      if (error?.status === 401) {
+        return {
+          logout: true,
+          error: new Error("Unauthorized"),
+        };
+      }
+  
+      return {};
+    },
+  
     register: async (params) => { throw new Error("Not implemented"); },
     forgotPassword: async (params) => { throw new Error("Not implemented"); },
     updatePassword: async (params) => { throw new Error("Not implemented"); },
