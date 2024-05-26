@@ -13,7 +13,7 @@ export const Header = () => {
     <>
       <h2>
         <span>Welcome, </span>
-        <span>{identity?.name}</span>
+        <span>{identity?.name ?? ""}</span>
       </h2>
       <button
         type="button"
