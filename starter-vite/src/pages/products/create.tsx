@@ -4,10 +4,12 @@ import { useEffect } from "react";
 
 export const CreateProduct = () => {
 
-    const { onFinish, mutationResult } = useForm({
-        action: "create",
-        resource: "products",
-    })
+    // const { onFinish, mutationResult } = useForm({
+    //     action: "create",
+    //     resource: "products",
+    // })
+
+    const { onFinish, mutationResult } = useForm()
 
 
     

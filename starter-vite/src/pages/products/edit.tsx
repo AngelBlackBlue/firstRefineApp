@@ -2,11 +2,12 @@ import { useForm, useSelect } from "@refinedev/core"
 import { Button, Flex, Input, Select } from "antd"
 
 export const EditProduct = () => {
-    const { onFinish, mutationResult, queryResult } = useForm({
-        action: "edit",
-        resource: "products",
-        id: "131"
-    })
+    // const { onFinish, mutationResult, queryResult } = useForm({
+    //     action: "edit",
+    //     resource: "products",
+    //     id: "131"
+    // })
+    const { onFinish, mutationResult, queryResult } = useForm()
 
        
     const record = queryResult?.data?.data;
