@@ -1,7 +1,7 @@
 import { Refine, Authenticated } from "@refinedev/core";
 // We'll wrap our app with Ant Design's ConfigProvider to set the theme and App component to use the theme properly.
 import { ConfigProvider, App as AntdApp } from "antd";
-import { ThemedHeaderV2, ThemedLayoutV2 } from "@refinedev/antd";
+import { ThemedLayoutV2, ThemedTitleV2 } from "@refinedev/antd";
 
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 
@@ -21,7 +21,7 @@ import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
 import { Login } from "./pages/login";
-import { Header } from "./componentes/header";
+// import { Header } from "./componentes/header";
 
 // We're importing a reset.css file to reset the default styles of the browser.
 import "antd/dist/reset.css";
@@ -53,8 +53,12 @@ export default function App(): JSX.Element {
               // We're omitting the `fallback` prop to redirect users to the login page if they are not authenticated.
               // If the user is authenticated, we'll render the `<Header />` component and the `<Outlet />` component to render the inner routes.
               <Authenticated key="authenticated-routes" redirectOnFail="/login">
-                {/* <Header /> */}
-                <ThemedLayoutV2>
+                <ThemedLayoutV2
+                Title={(props) => (
+                  <ThemedTitleV2 {...props} text="Awesome Project"/>
+                )}
+                >
+                  {/* <Header /> */}
                   <Outlet />
                 </ThemedLayoutV2>
               </Authenticated>
