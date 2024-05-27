@@ -13,7 +13,7 @@ export const ListProducts = () => {
         sorters,
         setSorters,
     } = useTable({
-        resource: "protected-products",
+        // resource: "protected-products",
         pagination: {current:1, pageSize: 10},
         sorters: { initial: [{field: "id", order: "asc"}]},
     });
