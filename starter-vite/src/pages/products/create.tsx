@@ -9,9 +9,9 @@ export const CreateProduct = () => {
     //     resource: "products",
     // })
 
-    const { onFinish, mutationResult } = useForm()
-
-
+    const { onFinish, mutationResult } = useForm({
+        redirect:"edit"
+    })
     
     const { options } = useSelect({
         resource: "categories"
