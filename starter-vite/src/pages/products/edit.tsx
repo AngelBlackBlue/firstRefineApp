@@ -7,7 +7,10 @@ export const EditProduct = () => {
     //     resource: "products",
     //     id: "131"
     // })
-    const { onFinish, mutationResult, queryResult } = useForm()
+    const { onFinish, mutationResult, queryResult } = useForm({
+        // This will redirect to the show page after the mutation is successful.
+        redirect: "show",
+      })
 
        
     const record = queryResult?.data?.data;
@@ -52,9 +55,6 @@ export const EditProduct = () => {
                    name="name" 
                    defaultValue={record?.name}
                 />
-         
-         
-     
         <Flex vertical>
            <label htmlFor="description">Description</label>
            <textarea 
