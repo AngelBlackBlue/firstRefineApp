@@ -1,4 +1,8 @@
 import { Refine, Authenticated } from "@refinedev/core";
+// We'll wrap our app with Ant Design's ConfigProvider to set the theme and App component to use the theme properly.
+import { ConfigProvider, App as AntdApp } from "antd";
+import { ThemedHeaderV2, ThemedLayoutV2 } from "@refinedev/antd";
+
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 
 import { 
@@ -16,16 +20,17 @@ import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
-import { App as AntdApp, ConfigProvider } from "antd";
-import { RefineThemes } from "@refinedev/antd";
-
 import { Login } from "./pages/login";
 import { Header } from "./componentes/header";
 
+// We're importing a reset.css file to reset the default styles of the browser.
+import "antd/dist/reset.css";
 
 export default function App(): JSX.Element {
   return (
     <BrowserRouter>
+      <ConfigProvider>
+      <AntdApp>
       <Refine
         dataProvider={dataProvider}
         authProvider={authProvider}
@@ -48,8 +53,10 @@ export default function App(): JSX.Element {
               // We're omitting the `fallback` prop to redirect users to the login page if they are not authenticated.
               // If the user is authenticated, we'll render the `<Header />` component and the `<Outlet />` component to render the inner routes.
               <Authenticated key="authenticated-routes" redirectOnFail="/login">
-                <Header />
-                <Outlet />
+                {/* <Header /> */}
+                <ThemedLayoutV2>
+                  <Outlet />
+                </ThemedLayoutV2>
               </Authenticated>
             }
           >
@@ -77,11 +84,13 @@ export default function App(): JSX.Element {
                 <NavigateToResource resource="protected-products" />
               </Authenticated>
             }
-          >
+            >
             <Route path="/login" element={<Login />} />
           </Route>
         </Routes>
       </Refine>
+      </AntdApp>
+      </ConfigProvider>
     </BrowserRouter>
   );
 }
