@@ -1,6 +1,8 @@
-import { useTable, useMany } from "@refinedev/core"
+import { useTable, useMany, useNavigation } from "@refinedev/core"
 
 type SortOrder = "asc" | "desc";
+
+import { Link } from "react-router-dom"
 
 export const ListProducts = () => {
     const {
@@ -16,12 +18,15 @@ export const ListProducts = () => {
         sorters: { initial: [{field: "id", order: "asc"}]},
     });
 
+    // You can also use methods like show or list to trigger navigation.
+    // We're using url methods to provide more semantically correct html.
+    const { showUrl, editUrl } = useNavigation();
+
     const { data: categories } =useMany({
         resource: "categories",
         ids: data?.data?.map( (product) => product.category?.id) ??  [],
     })
 
-    console.log(categories?.data)
 
    if (isLoading) {
         return <div>Loading...</div>
@@ -93,6 +98,7 @@ export const ListProducts = () => {
                         <th onClick={() => onSort("price")}>
                             Price {indicator[getSorter("price") as SortOrder]}
                         </th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,6 +115,10 @@ export const ListProducts = () => {
                             </td>
                             <td>{product.material}</td>
                             <td>{product.price}</td>
+                            <td>
+                              <Link to={showUrl("protected-products", product.id ?? "N/A")}>Show</Link>
+                              <Link to={editUrl("protected-products", product.id ?? "N/A")}>Edit</Link>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

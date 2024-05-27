@@ -6,7 +6,6 @@ import {
   Routes,
   Route,
   Outlet,
-  Navigate 
 } from "react-router-dom";
 
 import { dataProvider } from "./providers/data-provider";
@@ -55,6 +54,7 @@ export default function App(): JSX.Element {
             }
           >
           <Route 
+              index
               // We're also replacing the <Navigate /> component with the <NavigateToResource /> component.
               // It's tailored version of the <Navigate /> component that will redirect to the resource's list route.
               element={<NavigateToResource resource="protected-products" />}
