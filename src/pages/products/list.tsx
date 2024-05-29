@@ -1,12 +1,14 @@
-import { useMany } from "@refinedev/core";
+import { getDefaultFilter, useMany } from "@refinedev/core";
 import { 
     useTable, 
     EditButton, 
     ShowButton,
     getDefaultSortOrder, 
+    FilterDropdown,
+    useSelect
 } from "@refinedev/antd";
 
-import { Table, Space } from "antd";
+import { Table, Space, Input, Select } from "antd";
 
 interface RecordType {
     id: string; 
@@ -15,8 +17,12 @@ interface RecordType {
 export const ListProducts = () => {
   // We'll use pass `tableProps` to the `<Table />` component,
   // This will manage the data, pagination, filters and sorters for us.
-  const { tableProps, sorters } = useTable({
+  const { tableProps, sorters, filters } = useTable({
     sorters: { initial: [{ field: "id", order: "asc" }] },
+    // We're adding default values for our filters
+    filters:{
+      initial: [{ field: "Category.id", operator: "eq", value: 2}]
+    },
     syncWithLocation: true,
   });
 
@@ -25,6 +31,12 @@ export const ListProducts = () => {
     ids: tableProps?.dataSource?.map((product) => product.category?.id) ?? [],
   });
 
+  const { selectProps } = useSelect({
+    resource: "categories",
+    defaultValue: getDefaultFilter("Category.id", filters, "eq")
+  })
+
+  
   return (
     <div>
       <h1>Products</h1>
@@ -40,6 +52,12 @@ export const ListProducts = () => {
           title="Name" 
           sorter
           defaultSortOrder={getDefaultSortOrder("name", sorters)}
+          // FilterDropdown will map the value to the filter
+          filterDropdown={(props) => (
+            <FilterDropdown {...props}>
+              <Input/>
+            </FilterDropdown>
+          )}
         />
           
         <Table.Column
@@ -53,6 +71,16 @@ export const ListProducts = () => {
             return categories?.data?.find((category) => category.id == value)
               ?.title;
           }}
+          filterDropdown={(props) => (
+            <FilterDropdown
+              {...props}
+              // We'll store the selected id as number
+              mapValue={(selectedKey) => Number(selectedKey)}
+            >
+              <Select style={{ minWidth: 200 }} {...selectProps} />
+            </FilterDropdown>
+          )}
+          defaultFilteredValue={getDefaultFilter("category.id", filters, "eq")}
         />
         <Table.Column dataIndex="material" title="Material" />
         <Table.Column dataIndex="price" title="Price" />

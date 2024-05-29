@@ -56,10 +56,10 @@ export default function App(): JSX.Element {
                 <ThemedLayoutV2
                 Title={(props) => (
                   <ThemedTitleV2 {...props} text="Awesome Project"/>
-                )}
+                )}                 
                 >
-                  {/* <Header /> */}
-                  <Outlet />
+                  {/* <Header/>  */}
+                  <Outlet/>
                 </ThemedLayoutV2>
               </Authenticated>
             }
@@ -76,7 +76,9 @@ export default function App(): JSX.Element {
               <Route path=":id/edit" element={<EditProduct />} />
               <Route path="create" element={<CreateProduct />} />
             </Route>
+            
           </Route>
+       
           <Route
             element={
               <Authenticated key="auth-pages" fallback={<Outlet />}>
