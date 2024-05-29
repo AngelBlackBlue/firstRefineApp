@@ -1,7 +1,11 @@
 import { Refine, Authenticated } from "@refinedev/core";
 // We'll wrap our app with Ant Design's ConfigProvider to set the theme and App component to use the theme properly.
 import { ConfigProvider, App as AntdApp } from "antd";
-import { ThemedLayoutV2, ThemedTitleV2 } from "@refinedev/antd";
+import { 
+  ThemedLayoutV2, 
+  ThemedTitleV2,
+  useNotificationProvider
+ } from "@refinedev/antd";
 
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 
@@ -35,6 +39,7 @@ export default function App(): JSX.Element {
         dataProvider={dataProvider}
         authProvider={authProvider}
         routerProvider={routerProvider}
+        notificationProvider={useNotificationProvider}
         resources={[
           {
             name: "protected-products",
